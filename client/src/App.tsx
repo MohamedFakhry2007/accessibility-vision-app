@@ -1,19 +1,25 @@
 // client/src/App.tsx
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import ColorContrastAdjustment from './components/ColorContrastAdjustment';
 import VisualImpairmentSimulator from './components/VisualImpairmentSimulator';
 import GuidesAndBestPractices from './components/GuidesAndBestPractices';
-import './styles/App.css';  // Importing the CSS file from the styles directory
+import './styles/App.css'; // Importing the CSS file from the styles directory
 
-const ErrorBoundary: React.FC = ({ children }) => {
+const ErrorBoundary: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [hasError, setHasError] = React.useState(false);
-  
+
+  React.useEffect(() => {
+    const handleError = () => setHasError(true);
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
+
   if (hasError) {
     return <h1>Something went wrong. Please try again later.</h1>;
   }
-  
+
   return <>{children}</>;
 };
 
@@ -36,12 +42,12 @@ const App: React.FC = () => {
         </header>
         <main className="app-main">
           <ErrorBoundary>
-            <Switch>
-              <Route exact path="/" component={Dashboard} />
-              <Route path="/color-contrast" component={ColorContrastAdjustment} />
-              <Route path="/visual-impairment" component={VisualImpairmentSimulator} />
-              <Route path="/guides" component={GuidesAndBestPractices} />
-            </Switch>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/color-contrast" element={<ColorContrastAdjustment />} />
+              <Route path="/visual-impairment" element={<VisualImpairmentSimulator />} />
+              <Route path="/guides" element={<GuidesAndBestPractices />} />
+            </Routes>
           </ErrorBoundary>
         </main>
         <footer className="app-footer">
