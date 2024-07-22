@@ -27,6 +27,7 @@ const Login: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
+          aria-label="Enter your email address"
         />
         <input
           type="password"
@@ -34,14 +35,27 @@ const Login: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
+          aria-label="Enter your password"
         />
-        <button type="submit">Login</button>
+        <button type="submit" aria-label="Login to your account">Login</button>
       </form>
-      <Link to="/forgot-password">Forgot Password?</Link>
+      <Link to="/forgot-password" aria-label="Go to forgot password page">Forgot Password?</Link>
       <div className="oauth-options">
-        <button onClick={() => window.location.href = '/auth/google'}>Login with Google</button>
-        <button onClick={() => window.location.href = '/auth/github'}>Login with GitHub</button>
+        <button 
+          onClick={() => window.location.href = '/auth/google'} 
+          aria-label="Login with Google"
+        >
+          Login with Google
+        </button>
+        <button 
+          onClick={() => window.location.href = '/auth/github'} 
+          aria-label="Login with GitHub"
+        >
+          Login with GitHub
+        </button>
       </div>
     </div>
   );
 };
+
+export default Login;

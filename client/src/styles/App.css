@@ -1,0 +1,65 @@
+/* app.css */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-nav {
+  display: none;
+}
+
+.nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 1rem;
+}
+
+.nav-item a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-toggle {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.app-main {
+  flex-grow: 1;
+  padding: 2rem;
+}
+
+.app-footer {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .app-nav {
+    display: block;
+  }
+  
+  .nav-toggle {
+    display: none;
+  }
+}

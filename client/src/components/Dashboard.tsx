@@ -8,16 +8,25 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard">
       <h1>Accessibility Enhancement Dashboard</h1>
-      <nav>
+      <nav aria-label="Main Navigation">
         <ul>
-          <li><Link to="/color-contrast">Color and Contrast Adjustment</Link></li>
-          <li><Link to="/visual-impairment">Visual Impairment Simulator</Link></li>
+          <li>
+            <Link to="/color-contrast" aria-label="Go to Color and Contrast Adjustment">
+              Color and Contrast Adjustment
+            </Link>
+          </li>
+          <li>
+            <Link to="/visual-impairment" aria-label="Go to Visual Impairment Simulator">
+              Visual Impairment Simulator
+            </Link>
+          </li>
         </ul>
       </nav>
-      <div className="dashboard-content">
+      <section aria-label="Dashboard Content">
+        <h2>Quick Access Tools</h2>
         <ColorContrastAdjustment />
         <VisualImpairmentSimulator />
-      </div>
+      </section>
     </div>
   );
 };

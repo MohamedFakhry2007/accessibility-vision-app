@@ -15,17 +15,21 @@ const GuidesAndBestPractices: React.FC = () => {
   const [guides, setGuides] = useState<Guide[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchGuides();
   }, [selectedCategory, searchTerm]);
 
   const fetchGuides = async () => {
+    setIsLoading(true);
     try {
       const fetchedGuides = await getGuides(selectedCategory, searchTerm);
       setGuides(fetchedGuides);
     } catch (error) {
       console.error('Error fetching guides:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -36,6 +40,7 @@ const GuidesAndBestPractices: React.FC = () => {
         <select 
           value={selectedCategory} 
           onChange={(e) => setSelectedCategory(e.target.value)}
+          aria-label="Select category for guides"
         >
           <option value="">All Categories</option>
           <option value="color-contrast">Color Contrast</option>
@@ -47,13 +52,18 @@ const GuidesAndBestPractices: React.FC = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search guides..."
+          aria-label="Search for guides"
         />
       </div>
-      <div className="guide-list">
-        {guides.map((guide) => (
-          <GuideCard key={guide._id} guide={guide} />
-        ))}
-      </div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <div className="guide-list">
+          {guides.map((guide) => (
+            <GuideCard key={guide._id} guide={guide} />
+          ))}
+        </div>
+      )}
       <CreateGuideForm onGuideCreated={fetchGuides} />
     </div>
   );
@@ -84,10 +94,15 @@ const GuideCard: React.FC<{ guide: Guide }> = ({ guide }) => {
           max="5"
           value={rating}
           onChange={(e) => setRating(Number(e.target.value))}
+          aria-label="Rate this guide (1 to 5)"
         />
-        <button onClick={handleRate}>Rate</button>
+        <button onClick={handleRate} aria-label="Submit rating">
+          Rate
+        </button>
       </div>
-      <a href={`/guides/${guide._id}`}>Read More</a>
+      <a href={`/guides/${guide._id}`} aria-label={`Read more about ${guide.title}`}>
+        Read More
+      </a>
     </div>
   );
 };
@@ -119,24 +134,29 @@ const CreateGuideForm: React.FC<{ onGuideCreated: () => void }> = ({ onGuideCrea
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Guide Title"
         required
+        aria-label="Enter the title of the guide"
       />
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Guide Content"
         required
+        aria-label="Enter the content of the guide"
       />
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         required
+        aria-label="Select category for the guide"
       >
         <option value="">Select Category</option>
         <option value="color-contrast">Color Contrast</option>
         <option value="keyboard-navigation">Keyboard Navigation</option>
         <option value="screen-readers">Screen Readers</option>
       </select>
-      <button type="submit">Create Guide</button>
+      <button type="submit" aria-label="Create new guide">
+        Create Guide
+      </button>
     </form>
   );
 };

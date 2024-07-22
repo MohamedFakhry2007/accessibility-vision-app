@@ -27,10 +27,15 @@ const ForgotPassword: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
+          aria-label="Enter your email address for password reset"
         />
-        <button type="submit">Reset Password</button>
+        <button type="submit" aria-label="Reset password">
+          Reset Password
+        </button>
       </form>
       {message && <p>{message}</p>}
     </div>
   );
 };
+
+export default ForgotPassword;
